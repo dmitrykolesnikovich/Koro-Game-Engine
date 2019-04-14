@@ -43,7 +43,7 @@ public class MainFrame extends JPanel {
     boolean showfps = false;
     boolean highdraw=false;
     Font font = new Font("宋体", Font.BOLD, 20);
-    Thread render = null;
+    Thread mainrender = null;
     boolean gamestar = false;
     JPanel mainJpanel = this;
     String name = new String("");
@@ -287,7 +287,7 @@ public class MainFrame extends JPanel {
     }
 
     private void startrender() {
-	render = new Thread(new Runnable() {
+	mainrender = new Thread(new Runnable() {
 
 	    @Override
 	    public void run() {
@@ -325,7 +325,7 @@ public class MainFrame extends JPanel {
 		}
 	    }
 	});
-	render.start();
+	mainrender.start();
 	TimerTask task = new TimerTask() {
 	    @Override
 	    public void run() {// TODO 1S后执行，没间隔1S 重复做的事情
@@ -459,9 +459,11 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseReleased(x, y, arg0);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mouseReleased(x-component.getX(), y-component.getY(), arg0);
+			    return;
 			}
 		    }
 	    }
@@ -474,9 +476,11 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mousePressed(x, y, arg0);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mousePressed(x-component.getX(), y-component.getY(), arg0);
+			    return;
 			}
 		    }
 	    }
@@ -489,10 +493,12 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseReleased(x, y, arg0);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 		    if(component.isMouseIn()) {
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mouseExited(x-component.getX(), y-component.getY(), arg0);
+			    return;
 			}
 		    }
 		}
@@ -506,10 +512,12 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseEntered(x, y, arg0);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 		    if(!component.isMouseIn()) {
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mouseEntered(x-component.getX(), y-component.getY(), arg0);
+			    return;
 			}
 		    }
 		}
@@ -523,9 +531,11 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseClicked(x, y, arg0);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mouseClicked(x-component.getX(), y-component.getY(), arg0);
+			    return;
 			}
 		    }
 	    }
@@ -540,9 +550,11 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseMoved(x, y, e);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mouseMoved(x-component.getX(), y-component.getY(), e);
+			    return;
 			}
 		    }
 	    }
@@ -555,9 +567,11 @@ public class MainFrame extends JPanel {
 		y = (int) (y * Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseDragged(x, y, e);
-		for (indi.koro.koroGameEngine.component.Component component : components) {
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
 			    component.mouseDragged(x-component.getX(), y-component.getY(), e);
+			    return;
 			}
 		    }
 	    }
