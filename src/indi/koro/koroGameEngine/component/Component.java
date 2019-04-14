@@ -34,7 +34,6 @@ import indi.koro.koroGameEngine.listener.MouseListener;
  */
 public class Component implements MouseListener, MouseWheelListener, KeyListener, ComponentListener,indi.koro.koroGameEngine.listener.ComponentListener {
     
-    
     protected ArrayList<MouseListener> mouseListeners = new ArrayList<>();
     protected ArrayList<KeyListener> keyListeners = new ArrayList<>();
     protected ArrayList<ComponentListener> componentListeners = new ArrayList<>();
@@ -607,9 +606,11 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseReleased(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mouseReleased(x-component.x, y-component.y, e);
+		    return;
 		}
 	    }
     }
@@ -626,9 +627,11 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mousePressed(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mousePressed(x-component.x, y-component.y, e);
+		    return ;
 		}
 	    }
 
@@ -647,10 +650,12 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseExited(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 	    if(component.mouseIn) {
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mouseExited(x-component.x, y-component.y, e);
+		    return;
 		}
 	    }
 	}
@@ -670,10 +675,12 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseEntered(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 	    	if(!component.mouseIn) {
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mouseEntered(x-component.x, y-component.y, e);
+		    return;
 		}
 	    	}
 	    }
@@ -692,9 +699,11 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseClicked(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mouseClicked(x-component.x, y-component.y, e);
+		    return;
 		}
 	    }
 
@@ -712,9 +721,11 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseMoved(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mouseMoved(x-component.x, y-component.y, e);
+		    return;
 		}
 	    }
 
@@ -732,9 +743,11 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseDragged(x, y, e);
 	}
-	for (Component component : components) {
+	for (int i=components.size();i>0;i--) {
+	    Component component=components.get(i-1);
 		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
 		    component.mouseDragged(x-component.x, y-component.y, e);
+		    return;
 		}
 	    }
 
