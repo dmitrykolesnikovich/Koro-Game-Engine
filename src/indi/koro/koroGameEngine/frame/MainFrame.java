@@ -51,6 +51,16 @@ public class MainFrame extends JPanel {
     private ArrayList<indi.koro.koroGameEngine.listener.MouseListener> mouselisteners = new ArrayList<indi.koro.koroGameEngine.listener.MouseListener>();
     private static Timer timer = new Timer(true);
     private ArrayList<Print> prints=new ArrayList<>();
+    long fpsTime=0;
+    
+    /* （非 Javadoc）
+     * @see javax.swing.JComponent#update(java.awt.Graphics)
+     */
+    @Override
+    public void update(Graphics g) {
+        // TODO 自动生成的方法存根
+       // super.update(g);
+    }
     
     public void add(Print...prints) {
 	for (Print print : prints) {
@@ -168,8 +178,8 @@ public class MainFrame extends JPanel {
     /**
      * @return components
      */
-    public Component[] getKoroComponents() {
-        return (Component[])components.toArray();
+    public ArrayList<indi.koro.koroGameEngine.component.Component> getKoroComponents() {
+        return components;
     }
 
     /**
@@ -282,7 +292,7 @@ public class MainFrame extends JPanel {
 	    @Override
 	    public void run() {
 		// TODO 自动生成的方法存根
-		long fpsTime = (long) ((Double.valueOf(1000) / Double.valueOf(truefps)) * 1000000);
+		fpsTime = (long) ((Double.valueOf(1000) / Double.valueOf(truefps)) * 1000000);
 		// 绘制图像前的时间戳
 		long now = 0;
 		// 每次绘制图像耗时（毫秒）
@@ -290,14 +300,9 @@ public class MainFrame extends JPanel {
 		while (true) {
 		    now = System.nanoTime();
 		    // 绘制图像
-		    if(mainGraphics.isfullGPU) {
-			    truefps=Data.fps;
-			    
-			}else {
-			    truefps=30;
-			}
-		    fpsTime=(long) ((Double.valueOf(1000) / Double.valueOf(truefps)) * 1000000);
-		    frame.repaint();
+		    truefps=Data.fps;
+		    mainJpanel.repaint();
+		    mainGraphics.render();
 		    try {
 			// 除去绘制之后还需要休眠的时间
 			total = System.nanoTime() - now;
@@ -306,13 +311,17 @@ public class MainFrame extends JPanel {
 			    continue;
 			}
 			Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
-		    } catch (InterruptedException e) {
+		    } catch (Exception e) {
 			e.printStackTrace();
 		    }
 		    while ((System.nanoTime() - now) < fpsTime) {
 			// 使用循环，精确控制每帧绘制时长
 			System.nanoTime();
 		    }
+
+		
+		
+		
 		}
 	    }
 	});
@@ -322,7 +331,7 @@ public class MainFrame extends JPanel {
 	    public void run() {// TODO 1S后执行，没间隔1S 重复做的事情
 		fps = jfps;
 		jfps = 0;
-		mainJpanel.repaint();
+		fpsTime = (long) ((Double.valueOf(1000) / Double.valueOf(truefps)) * 1000000);
 		if (!frame.getTitle().equals(Data.title))
 		    frame.setTitle(Data.title);
 		if (Thread.activeCount() <= 1) {
@@ -353,19 +362,13 @@ public class MainFrame extends JPanel {
 
     @Override
     public void paint(Graphics g) {// 重写print
+	g.setColor(Color.white);
+	g.fillRect(0, 0, 100, 100);
 	// TODO 自动生成的方法存根
 	Graphics2D g2d = (Graphics2D) g;
-	mainGraphics.render();
-	g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	for (indi.koro.koroGameEngine.component.Component component : components) {
-	    component.print(mainGraphics.backGraphics());
-	}
-	for (Print print : prints) {
-	    print.print(mainGraphics.backGraphics());
-	}
+	//g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	//g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	g2d.drawImage(mainGraphics.backImage(), -1, -1, w+1, h+1, null);
-	printChildren(g2d);
 	g2d.setColor(Color.black);
 	g2d.setFont(font);
 	g2d.drawString("内部版本", 0, 20);

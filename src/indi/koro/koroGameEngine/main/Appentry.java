@@ -41,7 +41,7 @@ public class Appentry {
 
     public static void main(String arg0[]) {
 	Appentry appentry = new Appentry();
-	appentry.star("Spice And Wolf-The Journey With Horo", 1);
+	appentry.star("Spice And Wolf-The Journey With Horo", 0);
     }
 
 }

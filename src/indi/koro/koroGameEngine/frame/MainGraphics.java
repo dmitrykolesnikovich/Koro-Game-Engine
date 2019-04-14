@@ -17,18 +17,21 @@ import indi.koro.koroGameEngine.data.Data;
 
 public class MainGraphics {
     private BufferedImage bufImg;
+    private BufferedImage nowImage;
     Graphics2D g;
+    Graphics2D nowImageGraphics2d;
     Font font;
     ArrayList<Print> prints = new ArrayList<>();
-    boolean isfullGPU=false;
     private MainFrame frame=null;
 
     public MainGraphics(MainFrame frame) {
 	// TODO 自动生成的构造函数存根
 	this.frame=frame;
 	bufImg = createCompatibleImage(1920, 1080, Transparency.OPAQUE);
+	nowImage=createCompatibleImage(1920, 1080, Transparency.OPAQUE);
 	font = new Font("宋体", 0, 50);
 	g = bufImg.createGraphics();
+	nowImageGraphics2d=nowImage.createGraphics();
     }
 
     public void render() {
@@ -37,19 +40,22 @@ public class MainGraphics {
 
     public void paint() {// 绘制方法
 	g.setColor(Color.white);
-	g.fillRect(0, 0, 1920, 1080);
 	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	g.setFont(font);
 	g.setColor(Color.BLACK);
-
 	for (Print print : prints) {
 	    print.printthis(g);
+	}
+	
+	for (indi.koro.koroGameEngine.component.Component component : frame.getKoroComponents()) {
+	    component.print(g);
 	}
 
 	if (Data.gameshow) {
 	    Data.nowGame.render(g);
 	}
+	nowImageGraphics2d.drawImage(bufImg, 0, 0, 1920, 1080, null);
     }
 
     public void remove(Print print) {
@@ -64,9 +70,6 @@ public class MainGraphics {
 	return bufImg;
     }
     
-    public void fullGPUuse(boolean fullGPU) {
-	isfullGPU=fullGPU;
-    }
 
     public static BufferedImage createCompatibleImage(int w, int h, int type) { // 创建image实例
 	GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -83,7 +86,8 @@ public class MainGraphics {
      * @return bufImg
      */
     public BufferedImage getBufImg() {
-        return bufImg;
+       // return bufImg;
+        return nowImage;
     }
 
     /**
@@ -107,12 +111,6 @@ public class MainGraphics {
         return prints;
     }
 
-    /**
-     * @return isfullGPU
-     */
-    public boolean isIsfullGPU() {
-        return isfullGPU;
-    }
 
     /**
      * @param font 要设置的 font

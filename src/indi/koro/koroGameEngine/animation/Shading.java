@@ -24,7 +24,6 @@ public class Shading extends Animation {
     @Override
     protected void render() {
         // TODO 自动生成的方法存根
-	System.out.println((float)frame/(float)allFrame);
 	for (Component component : components) {
 	    if (fadein) {
 		component.setAlpha((float)frame/(float)allFrame);
