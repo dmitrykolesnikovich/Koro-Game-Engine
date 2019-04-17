@@ -60,6 +60,7 @@ public class MainFrame extends JPanel {
     public void update(Graphics g) {
         // TODO 自动生成的方法存根
        // super.update(g);
+	paint(g);
     }
     
     public void add(Print...prints) {
@@ -302,7 +303,6 @@ public class MainFrame extends JPanel {
 		    // 绘制图像
 		    truefps=Data.fps;
 		    mainJpanel.repaint();
-		    mainGraphics.render();
 		    try {
 			// 除去绘制之后还需要休眠的时间
 			total = System.nanoTime() - now;
@@ -362,13 +362,18 @@ public class MainFrame extends JPanel {
 
     @Override
     public void paint(Graphics g) {// 重写print
-	g.setColor(Color.white);
-	g.fillRect(0, 0, 100, 100);
+	//g.setColor(Color.white);
+	//g.fillRect(0, 0, 100, 100);
 	// TODO 自动生成的方法存根
 	Graphics2D g2d = (Graphics2D) g;
+	g2d.scale(Data.zoom,Data.zoom);
+        g2d.setColor(Color.white);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	//g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	//g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	g2d.drawImage(mainGraphics.backImage(), -1, -1, w+1, h+1, null);
+	mainGraphics.render((Graphics2D)g);
+	//g2d.drawImage(mainGraphics.backImage(), -1, -1, w+1, h+1, null);
 	g2d.setColor(Color.black);
 	g2d.setFont(font);
 	g2d.drawString("内部版本", 0, 20);

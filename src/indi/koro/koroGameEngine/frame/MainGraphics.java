@@ -2,6 +2,7 @@ package indi.koro.koroGameEngine.frame;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -10,6 +11,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 
 import indi.koro.koroGameEngine.component.Print;
@@ -30,32 +32,34 @@ public class MainGraphics {
 	bufImg = createCompatibleImage(1920, 1080, Transparency.OPAQUE);
 	nowImage=createCompatibleImage(1920, 1080, Transparency.OPAQUE);
 	font = new Font("宋体", 0, 50);
-	g = bufImg.createGraphics();
+	//g = bufImg.createGraphics();
 	nowImageGraphics2d=nowImage.createGraphics();
     }
 
-    public void render() {
-	paint();
+    public void render(Graphics2D g) {
+	paint(g);
     }
+    
 
-    public void paint() {// 绘制方法
-	g.setColor(Color.white);
-	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	g.setFont(font);
-	g.setColor(Color.BLACK);
-	for (Print print : prints) {
-	    print.printthis(g);
-	}
+    public void paint(Graphics2D g) {
+	// 创建硬件加速图像
+            // 绘制方法
+    		g.setFont(font);
+    		g.setColor(Color.BLACK);
+    		 // 任意的渲染逻辑
+    		if (Data.gameshow) {
+    		    Data.nowGame.render(g);
+    		}
+    		for (Print print : prints) {
+    		    print.printthis(g);
+    		}
 	
-	for (indi.koro.koroGameEngine.component.Component component : frame.getKoroComponents()) {
-	    component.print(g);
-	}
+    		for (indi.koro.koroGameEngine.component.Component component : frame.getKoroComponents()) {
+    		    component.print(g);
+    		}
 
-	if (Data.gameshow) {
-	    Data.nowGame.render(g);
-	}
-	nowImageGraphics2d.drawImage(bufImg, 0, 0, 1920, 1080, null);
+
+	//nowImageGraphics2d.drawImage(bufImg, 0, 0, 1920, 1080, null);
     }
 
     public void remove(Print print) {

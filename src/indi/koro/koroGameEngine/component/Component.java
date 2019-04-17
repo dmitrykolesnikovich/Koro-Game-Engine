@@ -288,6 +288,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	if(visible) {
 	int x=absX+width/2,y=absY+height/2;
 	float rotate=(float)this.rotate;
+	
 	g.rotate(rotate, x, y);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,alpha));
 	printComponent(g);

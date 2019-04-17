@@ -23,7 +23,7 @@ public class Animation {
     protected Animation animation=this;
     protected Thread thread=null;
     protected int time=1000;
-    protected int allFrame=30;
+    protected int allFrame=60;
     protected int frame=0;
     protected boolean repeat=false;
     ArrayList<Component>components=new ArrayList<>();
@@ -69,14 +69,14 @@ public class Animation {
     }
     protected void render() {
 	try {
-	    Thread.sleep(33);
+	    Thread.sleep(16);
 	} catch (InterruptedException e) {
 	    // TODO 自动生成的 catch 块
 	    e.printStackTrace();
 	}
     }
     public void start() {
-	allFrame=(int)((float)(time)/33.3333333f);
+	allFrame=(int)((float)(time)/16.666666667f);
 	thread.start();
     }
     protected class ARunnable implements Runnable{
