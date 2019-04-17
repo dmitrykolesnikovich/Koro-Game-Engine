@@ -8,6 +8,7 @@ package indi.koro.koroGameEngine.animation;
 import java.util.ArrayList;
 
 import indi.koro.koroGameEngine.component.Component;
+import indi.koro.koroGameEngine.listener.AnimationListener;
 
 /**
  *项目名称：KoroGameEngine
@@ -41,6 +42,9 @@ public class Circuit extends Animation {
 		}
 	    }
 	}
+	for (AnimationListener animationListener : animationListeners) {
+	    animationListener.finish();
+	}
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.animation.Animation#stop()
@@ -55,10 +59,11 @@ public class Circuit extends Animation {
     @Override
     public void stop() {
         // TODO 自动生成的方法存根
-        super.stop();
-        for (Animation animation: animations) {
+	for (Animation animation: animations) {
             animation.stop();
         }
+        super.stop();
+        
     }
     public void add(Animation...animations) {
         for (Animation animation : animations) {

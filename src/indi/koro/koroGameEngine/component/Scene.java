@@ -6,6 +6,7 @@ package indi.koro.koroGameEngine.component;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import indi.koro.koroGameEngine.component.scene.CustomSceneMode;
 
@@ -26,6 +27,7 @@ public class Scene extends Component{
     final static public int Cursor_up=5;
     final static public int Cursor_down=6;
     final static public int Custom=-1;
+    protected BufferedImage backgroundImage=null;
     private int intoMode=0;
     private int exitMode=0;
     private SThread thread =null;
@@ -132,11 +134,13 @@ public class Scene extends Component{
     public void print(Graphics2D g) {
         // TODO 自动生成的方法存根
         super.print(g);
+        g.drawImage(backgroundImage, null, absX, absY);
         if (draw) {
 	    printEffects(g);
 	}
         
     }
+    
     
     public void drawinto() {
 	draw=false;
@@ -249,5 +253,18 @@ public class Scene extends Component{
 		setVisible(false);
 	    }
 	}
+    }
+    /**
+     * @return backgroundImage
+     */
+    public BufferedImage getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    /**
+     * @param backgroundImage 要设置的 backgroundImage
+     */
+    public void setBackgroundImage(BufferedImage backgroundImage) {
+        this.backgroundImage = backgroundImage;
     }
 }

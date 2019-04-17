@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 import indi.koro.koroGameEngine.component.Component;
+import indi.koro.koroGameEngine.listener.AnimationListener;
 import indi.koro.koroGameEngine.listener.ComponentEvent;
 
 /**
@@ -28,6 +29,21 @@ public class Animation {
     protected boolean repeat=false;
     ArrayList<Component>components=new ArrayList<>();
     ArrayList<ComponentEvent> componentEvents=new ArrayList<>();
+    ArrayList<AnimationListener> animationListeners=new ArrayList<>();
+    public void addAnimationListener(AnimationListener...animationListeners) {
+	for (AnimationListener animationListener : animationListeners) {
+	    this.animationListeners.add(animationListener);
+	}
+	
+    }
+    public void removeAnimationListener(AnimationListener...animationListeners) {
+	for (AnimationListener animationListener : animationListeners) {
+	    this.animationListeners.remove(animationListener);
+	}
+    }
+    public void removeAllAnimationListeners() {
+	animationListeners.removeAll(animationListeners);
+    }
     public Animation() {
 	// TODO 自动生成的构造函数存根
 	thread=new Thread(new ARunnable());
@@ -42,6 +58,9 @@ public class Animation {
 	    render();
 	    frame--;
 	}}
+        for (AnimationListener animationListener : animationListeners) {
+	    animationListener.finish();
+	}
     }
     /**
      * @return repeat
@@ -57,6 +76,9 @@ public class Animation {
     }
     public void stop() {
 	thread.stop();
+	for (AnimationListener animationListener : animationListeners) {
+	    animationListener.exit();
+	}
     }
     public static float easeOut(float x) {
 	return 1-(1-x)*(1-x);
@@ -78,6 +100,9 @@ public class Animation {
     public void start() {
 	allFrame=(int)((float)(time)/16.666666667f);
 	thread.start();
+	for (AnimationListener animationListener : animationListeners) {
+	    animationListener.start();
+	}
     }
     protected class ARunnable implements Runnable{
 
@@ -145,5 +170,11 @@ public class Animation {
      */
     public ArrayList<Component> getComponents() {
         return components;
+    }
+    /**
+     * @return animationListeners
+     */
+    public ArrayList<AnimationListener> getAnimationListeners() {
+        return animationListeners;
     }
 }

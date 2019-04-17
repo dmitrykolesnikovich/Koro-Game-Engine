@@ -53,5 +53,7 @@ public class Move extends Animation {
 		    component.setLocation(endX,endY);
 		}
 	}
+        
+        
     }
 }

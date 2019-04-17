@@ -8,6 +8,7 @@ package indi.koro.koroGameEngine.animation;
 import java.util.ArrayList;
 
 import indi.koro.koroGameEngine.component.Component;
+import indi.koro.koroGameEngine.listener.AnimationListener;
 
 /**
  *项目名称：KoroGameEngine
@@ -54,6 +55,9 @@ public class Synchronize extends Animation{
 	for (Animation animation : animations) {
 	    animation.start();
 	}
+	for (AnimationListener animationListener : animationListeners) {
+	    animationListener.start();
+	}
     }
     public void remove(Animation...animations ) {
 	for (Animation animation : animations) {
@@ -69,6 +73,9 @@ public class Synchronize extends Animation{
     @Override
     public void stop() {
         // TODO 自动生成的方法存根
+	for (AnimationListener animationListener : animationListeners) {
+	    animationListener.exit();
+	}
         for (Animation animation: animations) {
 	    animation.stop();
 	}

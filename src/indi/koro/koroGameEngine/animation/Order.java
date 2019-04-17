@@ -8,6 +8,7 @@ package indi.koro.koroGameEngine.animation;
 import java.util.ArrayList;
 
 import indi.koro.koroGameEngine.component.Component;
+import indi.koro.koroGameEngine.listener.AnimationListener;
 
 /**
  *项目名称：KoroGameEngine
@@ -49,6 +50,9 @@ public class Order extends Animation {
         // TODO 自动生成的方法存根
         for (Animation animation : animations) {
 	    animation.run();
+	}
+        for (AnimationListener animationListener : animationListeners) {
+	    animationListener.finish();
 	}
     }
     

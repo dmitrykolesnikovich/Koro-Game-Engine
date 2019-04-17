@@ -3,6 +3,7 @@ package indi.koro.koroGameEngine.component;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -54,6 +55,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     protected boolean opaque=true;
     protected float rotate=0;
     protected boolean mouseIn=false;
+    protected Font font=new Font("宋体", Font.BOLD, 20);
     
     /**
      * @return visible
@@ -946,5 +948,17 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     public void visible(indi.koro.koroGameEngine.listener.ComponentEvent componentEvent) {
 	// TODO 自动生成的方法存根
 	
+    }
+    /**
+     * @return font
+     */
+    public Font getFont() {
+        return font;
+    }
+    /**
+     * @param font 要设置的 font
+     */
+    public void setFont(Font font) {
+        this.font = font;
     }
 }
