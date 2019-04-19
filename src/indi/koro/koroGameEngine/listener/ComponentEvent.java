@@ -22,11 +22,12 @@ public class ComponentEvent {
     private int absY;
     private int width;
     private int height;
+    private int rotate;
     private Component component;
     /**
      * 
      */
-    public ComponentEvent(int x,int y,int absX,int absY,int width,int height,Component component) {
+    public ComponentEvent(int x,int y,int absX,int absY,int width,int height,int rotate,Component component) {
 	// TODO 自动生成的构造函数存根
 	this.absX=absX;
 	this.absY=absY;
@@ -34,6 +35,7 @@ public class ComponentEvent {
 	this.y=y;
 	this.width=width;
 	this.height=height;
+	this.rotate=rotate;
 	this.component=component;
     }
     /**
@@ -41,6 +43,9 @@ public class ComponentEvent {
      */
     public int getX() {
         return x;
+    }
+    public int getRotate() {
+	return rotate;
     }
     /**
      * @return y

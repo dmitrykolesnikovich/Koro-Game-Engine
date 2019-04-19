@@ -18,22 +18,13 @@ import indi.koro.koroGameEngine.component.Print;
 import indi.koro.koroGameEngine.data.Data;
 
 public class MainGraphics {
-    private BufferedImage bufImg;
-    private BufferedImage nowImage;
-    Graphics2D g;
-    Graphics2D nowImageGraphics2d;
-    Font font;
     ArrayList<Print> prints = new ArrayList<>();
     private MainFrame frame=null;
 
     public MainGraphics(MainFrame frame) {
 	// TODO 自动生成的构造函数存根
 	this.frame=frame;
-	bufImg = createCompatibleImage(1920, 1080, Transparency.OPAQUE);
-	nowImage=createCompatibleImage(1920, 1080, Transparency.OPAQUE);
-	font = new Font("宋体", 0, 50);
 	//g = bufImg.createGraphics();
-	nowImageGraphics2d=nowImage.createGraphics();
     }
 
     public void render(Graphics2D g) {
@@ -44,8 +35,6 @@ public class MainGraphics {
     public void paint(Graphics2D g) {
 	// 创建硬件加速图像
             // 绘制方法
-    		g.setFont(font);
-    		g.setColor(Color.BLACK);
     		 // 任意的渲染逻辑
     		if (Data.gameshow) {
     		    Data.nowGame.render(g);
@@ -66,13 +55,6 @@ public class MainGraphics {
 	prints.remove(print);
     }
 
-    public Graphics2D backGraphics() {
-	return g;
-    }
-
-    public Image backImage() {
-	return bufImg;
-    }
     
 
     public static BufferedImage createCompatibleImage(int w, int h, int type) { // 创建image实例
@@ -86,40 +68,11 @@ public class MainGraphics {
 	prints.add(print);
     }
 
-    /**
-     * @return bufImg
-     */
-    public BufferedImage getBufImg() {
-       // return bufImg;
-        return nowImage;
-    }
-
-    /**
-     * @return g
-     */
-    public Graphics2D getG() {
-        return g;
-    }
-
-    /**
-     * @return font
-     */
-    public Font getFont() {
-        return font;
-    }
 
     /**
      * @return prints
      */
     public ArrayList<Print> getPrints() {
         return prints;
-    }
-
-
-    /**
-     * @param font 要设置的 font
-     */
-    public void setFont(Font font) {
-        this.font = font;
     }
 }

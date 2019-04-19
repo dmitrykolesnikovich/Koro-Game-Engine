@@ -42,7 +42,7 @@ public class MainFrame extends JPanel {
     int h = 1080;
     boolean showfps = false;
     boolean highdraw=false;
-    Font font = new Font("宋体", Font.BOLD, 20);
+    Font font = new Font("宋体", Font.BOLD, 40);
     Thread mainrender = null;
     boolean gamestar = false;
     JPanel mainJpanel = this;
@@ -370,15 +370,13 @@ public class MainFrame extends JPanel {
         g2d.setColor(Color.white);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	//g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	//g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	mainGraphics.render((Graphics2D)g);
 	//g2d.drawImage(mainGraphics.backImage(), -1, -1, w+1, h+1, null);
 	g2d.setColor(Color.black);
 	g2d.setFont(font);
-	g2d.drawString("内部版本", 0, 20);
+	g2d.drawString("内部版本", 0, 40);
 	if (showfps) {
-	    g2d.drawString("FPS:" + fps, 0, 40);
+	    g2d.drawString("FPS:" + fps, 0, 80);
 	}
 	jfps++;
 	

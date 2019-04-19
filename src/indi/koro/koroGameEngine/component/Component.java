@@ -73,9 +73,9 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
      */
     public void setVisible(boolean visible) {
         this.visible = visible;
-        visible(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this));
+        visible(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this));
 	for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
-	    listener.visible(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this));
+	    listener.visible(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this));
 	}
     }
     
@@ -94,7 +94,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     }
     
     public indi.koro.koroGameEngine.listener.ComponentEvent getComponentEvent(){
-	return new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this);
+	return new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this);
     }
     
     public void addComponentListener(indi.koro.koroGameEngine.listener.ComponentListener componentListener) {
@@ -197,7 +197,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	this.width=w;
 	this.height=h;
 	for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
-	    listener.reSize(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, w, h, this));
+	    listener.reSize(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, w, h,(int)rotate, this));
 	}
     }
     
@@ -209,9 +209,9 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (Component component : components) {
 	    component.setabsLocation(absX, absY);
 	}
-	move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this));
+	move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this));
 	for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
-	    listener.move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this));
+	    listener.move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this));
 	}
     }
     
@@ -221,9 +221,9 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (Component component : components) {
 	    component.setabsLocation(this.absX, this.absY);
 	}
-	move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this));
+	move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this));
 	for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
-	    listener.move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this));
+	    listener.move(new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this));
 	}
     }
     
@@ -237,7 +237,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (Component component : components) {
 	    component.setabsLocation(absX, absY);
 	}
-	indi.koro.koroGameEngine.listener.ComponentEvent event=new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height, this);
+	indi.koro.koroGameEngine.listener.ComponentEvent event=new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this);
 	move(event);
 	reSize(event);
 	for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
@@ -960,5 +960,11 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
      */
     public void setFont(Font font) {
         this.font = font;
+    }
+    /**
+     * @return rotate
+     */
+    public float getRotate() {
+        return rotate;
     }
 }
