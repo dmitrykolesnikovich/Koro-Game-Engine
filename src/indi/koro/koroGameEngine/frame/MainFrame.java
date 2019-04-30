@@ -210,7 +210,9 @@ public class MainFrame extends JPanel {
      */
     public void add(indi.koro.koroGameEngine.component.Component... components) {
 	for (indi.koro.koroGameEngine.component.Component component : components) {
+	    component.setabsLocation(0, 0);
 	    this.components.add(component);
+	    
 	}
     }
     
@@ -458,13 +460,13 @@ public class MainFrame extends JPanel {
 	    public void mouseReleased(MouseEvent arg0) {
 		// TODO 自动生成的方法存根
 		int x = arg0.getX(), y = arg0.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) (x / Data.zoom);
+		y = (int) (y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseReleased(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseReleased(x-component.getX(), y-component.getY(), arg0);
 			    return;
 			}
@@ -475,13 +477,14 @@ public class MainFrame extends JPanel {
 	    public void mousePressed(MouseEvent arg0) {
 		// TODO 自动生成的方法存根
 		int x = arg0.getX(), y = arg0.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) (x / Data.zoom);
+		y = (int) (y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mousePressed(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+			    System.out.println(component.getAbsX()+" "+component.getAbsY()+" "+component.getWidth()+" ");
 			    component.mousePressed(x-component.getX(), y-component.getY(), arg0);
 			    return;
 			}
@@ -492,14 +495,14 @@ public class MainFrame extends JPanel {
 	    public void mouseExited(MouseEvent arg0) {
 		// TODO 自动生成的方法存根
 		int x = arg0.getX(), y = arg0.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) (x / Data.zoom);
+		y = (int) (y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseReleased(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 		    if(component.isMouseIn()) {
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y){
 			    component.mouseExited(x-component.getX(), y-component.getY(), arg0);
 			    return;
 			}
@@ -511,14 +514,14 @@ public class MainFrame extends JPanel {
 	    public void mouseEntered(MouseEvent arg0) {
 		// TODO 自动生成的方法存根
 		int x = arg0.getX(), y = arg0.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) (x / Data.zoom);
+		y = (int) (y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseEntered(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 		    if(!component.isMouseIn()) {
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseEntered(x-component.getX(), y-component.getY(), arg0);
 			    return;
 			}
@@ -530,13 +533,13 @@ public class MainFrame extends JPanel {
 	    public void mouseClicked(MouseEvent arg0) {
 		// TODO 自动生成的方法存根
 		int x = arg0.getX(), y = arg0.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) (x / Data.zoom);
+		y = (int) (y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseClicked(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseClicked(x-component.getX(), y-component.getY(), arg0);
 			    return;
 			}
@@ -549,13 +552,13 @@ public class MainFrame extends JPanel {
 	    public void mouseMoved(MouseEvent e) {
 		// TODO 自动生成的方法存根
 		int x = e.getX(), y = e.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) ((float)x / Data.zoom);
+		y = (int) ((float)y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseMoved(x, y, e);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseMoved(x-component.getX(), y-component.getY(), e);
 			    return;
 			}
@@ -566,13 +569,13 @@ public class MainFrame extends JPanel {
 	    public void mouseDragged(MouseEvent e) {
 		// TODO 自动生成的方法存根
 		int x = e.getX(), y = e.getY();
-		x = (int) (x * Data.zoom);
-		y = (int) (y * Data.zoom);
+		x = (int) (x / Data.zoom);
+		y = (int) (y / Data.zoom);
 		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
 		    mouseListener.mouseDragged(x, y, e);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-			if(component.getAbsX()>=x|component.getAbsY()>=y|component.getWidth()+component.getAbsX()<=x|component.getHeight()+component.getAbsY()<=y) {
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseDragged(x-component.getX(), y-component.getY(), e);
 			    return;
 			}

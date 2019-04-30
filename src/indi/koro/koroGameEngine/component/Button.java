@@ -133,7 +133,6 @@ public class Button extends Component {
     public void mouseClicked(int x, int y, MouseEvent e) {
         // TODO 自动生成的方法存根
         super.mouseClicked(x, y, e);
-        mode=MOUSECLICKED;
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#mousePressed(int, int, java.awt.event.MouseEvent)
@@ -143,6 +142,7 @@ public class Button extends Component {
         // TODO 自动生成的方法存根
         super.mousePressed(x, y, e);
         mode=MOUSECLICKED;
+        System.out.println("mouceclick");
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#mouseEntered(int, int, java.awt.event.MouseEvent)
@@ -153,6 +153,7 @@ public class Button extends Component {
         super.mouseEntered(x, y, e);
         mode=MOUSEENTERED;
         mouseEntered=true;
+        System.out.println("mouceen");
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#mouseExited(int, int, java.awt.event.MouseEvent)
@@ -163,6 +164,7 @@ public class Button extends Component {
         super.mouseExited(x, y, e);
         mode=MOUSENONE;
         mouseEntered=false;
+        System.out.println("mouceex");
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#mouseReleased(int, int, java.awt.event.MouseEvent)
@@ -173,8 +175,10 @@ public class Button extends Component {
         super.mouseReleased(x, y, e);
         if(mouseEntered) {
             mode=MOUSEENTERED;
+            System.out.println("moucer");
         }else {
             mode=MOUSENONE;
+            System.out.println("moucer2");
         }
         
     }

@@ -215,7 +215,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	}
     }
     
-    protected void setabsLocation(int absx,int absy) {
+    public void setabsLocation(int absx,int absy) {
 	this.absX=x+absx;
 	this.absY=y+absy;
 	for (Component component : components) {
