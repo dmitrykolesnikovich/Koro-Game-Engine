@@ -9,7 +9,6 @@ import indi.koro.koroGameEngine.frame.MainGraphics;
 public abstract class Game {
     public abstract void run(MainGraphics mainGraphics, MainFrame mainFrame);
 
-    public abstract void mouseclick();
 
     public abstract String backname();
 

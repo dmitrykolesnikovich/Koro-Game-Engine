@@ -6,6 +6,7 @@ package indi.koro.koroGameEngine.component;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import indi.koro.koroGameEngine.component.scene.CustomSceneMode;
@@ -37,7 +38,7 @@ public class Scene extends Component{
     private int nowMode=0;
     private CustomSceneMode customSceneMode=null;
     private boolean draw=false;
-    private Color backgroundColor=Color.black;
+    private Color backgroundColor=Color.WHITE;
     private boolean disVisible=false;
     /**
      * @return backgroundColor
@@ -133,8 +134,8 @@ public class Scene extends Component{
     @Override
     public void print(Graphics2D g) {
         // TODO 自动生成的方法存根
-        super.print(g);
         g.drawImage(backgroundImage, null, absX, absY);
+        super.print(g);
         if (draw) {
 	    printEffects(g);
 	}
@@ -156,15 +157,20 @@ public class Scene extends Component{
 	if(thread!=null) {
 	    thread.exit();
 	}
-	thread=new SThread();
 	nowMode=mode;
-	thread.start();
+	thread=new SThread();
 	draw=true;
+	thread.start();
+	setVisible(true);
     }
     private void printEffects(Graphics2D g) {
 	Color oldColor=g.getColor();
 	g.setColor(backgroundColor);
 	switch (nowMode) {
+	
+	case None:
+	    break;
+	
 	case Fade_in:
 	    drawFade_in(g);
 	    break;
@@ -191,17 +197,20 @@ public class Scene extends Component{
     }
     private void drawFade_in(Graphics2D g) {
 	float alpha = 1f-(float)(frame)/(float)(allFrame);
-	System.out.println(alpha);
-	System.out.println(frame);
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_OFF);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,alpha));
 	g.fillRect(absX, absY, width, height);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,1));
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+	
     }
     private void drawFade_out(Graphics2D g) {
 	float alpha = (float)(frame)/(float)(allFrame);
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_OFF);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,alpha));
 	g.fillRect(absX, absY, width, height);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,1));
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
     }
     private void drawCursor_left(Graphics2D g) {
 	
@@ -235,7 +244,7 @@ public class Scene extends Component{
 	    // TODO 自动生成的方法存根
 	    super.run();
 	    frame=0;
-	    allFrame=(int)(time/16.6666666666667);
+	    allFrame=(int)((float)(time)/16.666666667f);
 	    while ( frame < allFrame) {
 		frame++;
 		if (exit) {

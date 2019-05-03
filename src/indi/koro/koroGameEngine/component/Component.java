@@ -257,7 +257,10 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
      */
     protected void printChildren(Graphics2D g) {
 	for (Component component : components) {
-	    component.print(g);
+	    if (component.isVisible()) {
+		    component.print(g);
+	    }
+	    
 	}
     }
 
@@ -606,14 +609,13 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     @Override
     public void mouseReleased(int x, int y, MouseEvent e) {
 	// TODO 自动生成的方法存根
-	for (MouseListener listener : mouseListeners) {
-	    listener.mouseReleased(x, y, e);
-	}
+	for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
+	    mouseListener.mouseReleased(x, y, e);
 	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mouseReleased(x-component.x, y-component.y, e);
-		    return;
+	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		    component.mouseReleased(x-component.getX(), y-component.getY(), e);
+		    break;
 		}
 	    }
     }
@@ -627,14 +629,13 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     @Override
     public void mousePressed(int x, int y, MouseEvent e) {
 	// TODO 自动生成的方法存根
-	for (MouseListener listener : mouseListeners) {
-	    listener.mousePressed(x, y, e);
-	}
+	for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
+	    mouseListener.mousePressed(x, y, e);
 	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mousePressed(x-component.x, y-component.y, e);
-		    return ;
+	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		    component.mousePressed(x-component.getX(), y-component.getY(), e);
+		    break;
 		}
 	    }
 
@@ -653,15 +654,6 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	for (MouseListener listener : mouseListeners) {
 	    listener.mouseExited(x, y, e);
 	}
-	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-	    if(component.mouseIn) {
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mouseExited(x-component.x, y-component.y, e);
-		    return;
-		}
-	    }
-	}
 
     }
 
@@ -674,19 +666,8 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     @Override
     public void mouseEntered(int x, int y, MouseEvent e) {
 	mouseIn=true;
-	// TODO 自动生成的方法存根
-	for (MouseListener listener : mouseListeners) {
-	    listener.mouseEntered(x, y, e);
-	}
-	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-	    	if(!component.mouseIn) {
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mouseEntered(x-component.x, y-component.y, e);
-		    return;
-		}
-	    	}
-	    }
+	for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
+	    mouseListener.mouseEntered(x, y, e);
 
     }
 
@@ -699,14 +680,13 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     @Override
     public void mouseClicked(int x, int y, MouseEvent e) {
 	// TODO 自动生成的方法存根
-	for (MouseListener listener : mouseListeners) {
-	    listener.mouseClicked(x, y, e);
-	}
+	for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
+	    mouseListener.mouseClicked(x, y, e);
 	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mouseClicked(x-component.x, y-component.y, e);
-		    return;
+	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		    component.mouseClicked(x-component.getX(), y-component.getY(), e);
+		    break;
 		}
 	    }
 
@@ -721,17 +701,36 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     @Override
     public void mouseMoved(int x, int y, MouseEvent e) {
 	// TODO 自动生成的方法存根
-	for (MouseListener listener : mouseListeners) {
-	    listener.mouseMoved(x, y, e);
+	for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
+	    mouseListener.mouseMoved(x, y, e);
+	boolean firstComponent=false;
+	for (int i=components.size();i>0;i--) {
+	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		   if(!firstComponent) {
+		    if (!component.isMouseIn()) {
+			component.setMouseIn(true);
+			component.mouseEntered(x, y, e);
+		    }
+		    firstComponent=true;
+		   }else {
+		       if (component.isMouseIn()) {
+			   component.setMouseIn(false);
+			   component.mouseExited(x, y, e);
+			 }
+		}
+		}else if (component.isMouseIn()) {
+		    component.setMouseIn(false);
+		    component.mouseExited(x, y, e);
+		}
 	}
 	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mouseMoved(x-component.x, y-component.y, e);
-		    return;
+	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		    component.mouseMoved(x-component.getX(), y-component.getY(), e);
+		    break;
 		}
 	    }
-
     }
 
     /*
@@ -743,14 +742,13 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     @Override
     public void mouseDragged(int x, int y, MouseEvent e) {
 	// TODO 自动生成的方法存根
-	for (MouseListener listener : mouseListeners) {
-	    listener.mouseDragged(x, y, e);
-	}
+	for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
+	    mouseListener.mouseDragged(x, y, e);
 	for (int i=components.size();i>0;i--) {
-	    Component component=components.get(i-1);
-		if(component.absX>=x|component.absY>=y|component.width+component.absX<=x|component.height+component.absY<=y) {
-		    component.mouseDragged(x-component.x, y-component.y, e);
-		    return;
+	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		    component.mouseDragged(x-component.getX(), y-component.getY(), e);
+		    break;
 		}
 	    }
 

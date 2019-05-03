@@ -48,7 +48,7 @@ public class MainFrame extends JPanel {
     JPanel mainJpanel = this;
     String name = new String("");
     MainGraphics mainGraphics = null;
-    private ArrayList<indi.koro.koroGameEngine.listener.MouseListener> mouselisteners = new ArrayList<indi.koro.koroGameEngine.listener.MouseListener>();
+    private ArrayList<indi.koro.koroGameEngine.listener.MouseListener> mouseListeners = new ArrayList<indi.koro.koroGameEngine.listener.MouseListener>();
     private static Timer timer = new Timer(true);
     private ArrayList<Print> prints=new ArrayList<>();
     long fpsTime=0;
@@ -172,8 +172,8 @@ public class MainFrame extends JPanel {
     /**
      * @return mouselisteners
      */
-    public ArrayList<indi.koro.koroGameEngine.listener.MouseListener> getMouselisteners() {
-        return mouselisteners;
+    public ArrayList<indi.koro.koroGameEngine.listener.MouseListener> getKoroMouseListeners() {
+        return mouseListeners;
     }
 
     /**
@@ -258,7 +258,7 @@ public class MainFrame extends JPanel {
      * @see java.awt.Component#addMouseListener(java.awt.event.MouseListener)
      */
     public void addMouseListener(indi.koro.koroGameEngine.listener.MouseListener mouseListener) {
-	this.mouselisteners.add(mouseListener);
+	this.mouseListeners.add(mouseListener);
     }
 
     /**
@@ -312,14 +312,14 @@ public class MainFrame extends JPanel {
 			    // 如果本次绘制时间超过每帧需要绘制的时间，则直接继续绘制
 			    continue;
 			}
-			Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
+			//Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
 		    } catch (Exception e) {
 			e.printStackTrace();
 		    }
-		    while ((System.nanoTime() - now) < fpsTime) {
+		    //while ((System.nanoTime() - now) < fpsTime) {
 			// 使用循环，精确控制每帧绘制时长
-			System.nanoTime();
-		    }
+		//	System.nanoTime();
+		    //}
 
 		
 		
@@ -367,15 +367,17 @@ public class MainFrame extends JPanel {
 	//g.setColor(Color.white);
 	//g.fillRect(0, 0, 100, 100);
 	// TODO 自动生成的方法存根
+	super.paint(g);
 	Graphics2D g2d = (Graphics2D) g;
+	RenderingHints rh=new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+	g2d.setRenderingHints(rh);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	g2d.scale(Data.zoom,Data.zoom);
         g2d.setColor(Color.white);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	mainGraphics.render((Graphics2D)g);
+	g2d.setFont(font);
 	//g2d.drawImage(mainGraphics.backImage(), -1, -1, w+1, h+1, null);
 	g2d.setColor(Color.black);
-	g2d.setFont(font);
 	g2d.drawString("内部版本", 0, 40);
 	if (showfps) {
 	    g2d.drawString("FPS:" + fps, 0, 80);
@@ -404,7 +406,7 @@ public class MainFrame extends JPanel {
 	frame.setTitle(Data.title);
 	this.setLayout(null);
 	this.setBounds(0, 0, w, h);
-	this.setBackground(Color.black);
+	this.setBackground(Color.white);
 	this.setVisible(true);
 	frame.add(this);
 	JPanel mainpanel = this;
@@ -462,13 +464,13 @@ public class MainFrame extends JPanel {
 		int x = arg0.getX(), y = arg0.getY();
 		x = (int) (x / Data.zoom);
 		y = (int) (y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
+		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
 		    mouseListener.mouseReleased(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseReleased(x-component.getX(), y-component.getY(), arg0);
-			    return;
+			    break;
 			}
 		    }
 	    }
@@ -479,14 +481,13 @@ public class MainFrame extends JPanel {
 		int x = arg0.getX(), y = arg0.getY();
 		x = (int) (x / Data.zoom);
 		y = (int) (y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
+		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
 		    mouseListener.mousePressed(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
-			    System.out.println(component.getAbsX()+" "+component.getAbsY()+" "+component.getWidth()+" ");
 			    component.mousePressed(x-component.getX(), y-component.getY(), arg0);
-			    return;
+			    break;
 			}
 		    }
 	    }
@@ -494,20 +495,6 @@ public class MainFrame extends JPanel {
 	    @Override
 	    public void mouseExited(MouseEvent arg0) {
 		// TODO 自动生成的方法存根
-		int x = arg0.getX(), y = arg0.getY();
-		x = (int) (x / Data.zoom);
-		y = (int) (y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
-		    mouseListener.mouseReleased(x, y, arg0);
-		for (int i=components.size();i>0;i--) {
-		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		    if(component.isMouseIn()) {
-			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y){
-			    component.mouseExited(x-component.getX(), y-component.getY(), arg0);
-			    return;
-			}
-		    }
-		}
 	    }
 
 	    @Override
@@ -516,14 +503,14 @@ public class MainFrame extends JPanel {
 		int x = arg0.getX(), y = arg0.getY();
 		x = (int) (x / Data.zoom);
 		y = (int) (y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
+		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
 		    mouseListener.mouseEntered(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 		    if(!component.isMouseIn()) {
 			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseEntered(x-component.getX(), y-component.getY(), arg0);
-			    return;
+			    break;
 			}
 		    }
 		}
@@ -535,13 +522,13 @@ public class MainFrame extends JPanel {
 		int x = arg0.getX(), y = arg0.getY();
 		x = (int) (x / Data.zoom);
 		y = (int) (y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
+		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
 		    mouseListener.mouseClicked(x, y, arg0);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseClicked(x-component.getX(), y-component.getY(), arg0);
-			    return;
+			    break;
 			}
 		    }
 	    }
@@ -551,16 +538,38 @@ public class MainFrame extends JPanel {
 	    @Override
 	    public void mouseMoved(MouseEvent e) {
 		// TODO 自动生成的方法存根
+		
 		int x = e.getX(), y = e.getY();
 		x = (int) ((float)x / Data.zoom);
 		y = (int) ((float)y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
+		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
 		    mouseListener.mouseMoved(x, y, e);
+		boolean firstComponent=false;
+		for (int i=components.size();i>0;i--) {
+		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
+			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+			   if(!firstComponent) {
+			    if (!component.isMouseIn()) {
+				component.setMouseIn(true);
+				component.mouseEntered(x, y, e);
+			    }
+			    firstComponent=true;
+			   }else {
+			       if (component.isMouseIn()) {
+				   component.setMouseIn(false);
+				   component.mouseExited(x, y, e);
+				 }
+			}
+			}else if (component.isMouseIn()) {
+			    component.setMouseIn(false);
+			    component.mouseExited(x, y, e);
+			}
+		}
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseMoved(x-component.getX(), y-component.getY(), e);
-			    return;
+			    break;
 			}
 		    }
 	    }
@@ -571,13 +580,13 @@ public class MainFrame extends JPanel {
 		int x = e.getX(), y = e.getY();
 		x = (int) (x / Data.zoom);
 		y = (int) (y / Data.zoom);
-		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouselisteners)
+		for (indi.koro.koroGameEngine.listener.MouseListener mouseListener : mouseListeners)
 		    mouseListener.mouseDragged(x, y, e);
 		for (int i=components.size();i>0;i--) {
 		    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
 			if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
 			    component.mouseDragged(x-component.getX(), y-component.getY(), e);
-			    return;
+			    break;
 			}
 		    }
 	    }

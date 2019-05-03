@@ -44,7 +44,10 @@ public class MainGraphics {
     		}
 	
     		for (indi.koro.koroGameEngine.component.Component component : frame.getKoroComponents()) {
-    		    component.print(g);
+    		    if (component.isVisible()) {
+    			component.print(g);
+		    }
+    		    
     		}
 
 
