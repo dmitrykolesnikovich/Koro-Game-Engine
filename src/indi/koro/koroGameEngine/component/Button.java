@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
  * @version 1.0
  */
 public class Button extends Component {
+    protected int length=0;
     protected boolean noneImage=true;
     protected String textString=new String();
     protected int mode=0;
@@ -76,6 +77,24 @@ public class Button extends Component {
 	this.clickImage=image;
 	this.enteredImage=image;
     }
+    public static int length(String value) {
+        int valueLength = 0;
+        String chinese = "[\u0391-\uFFE5]";
+        /* 获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1 */
+        for (int i = 0; i < value.length(); i++) {
+            /* 获取一个字符 */
+            String temp = value.substring(i, i + 1);
+            /* 判断是否为中文字符 */
+            if (temp.matches(chinese)) {
+                /* 中文字符长度为2 */
+                valueLength += 2;
+            } else {
+                /* 其他字符长度为1 */
+                valueLength += 1;
+            }
+        }
+        return valueLength;
+    }
     /**
      * 
      */
@@ -108,7 +127,7 @@ public class Button extends Component {
             g.fillRect(absX, absY, width, height);  
 	}
         g.setFont(font);
-        g.drawString(textString, absX+(width-font.getSize()*textString.length())/2, absY+(height-font.getSize())/2);
+        g.drawString(textString, absX+(width-font.getSize()*length/2)/2, absY+(height-font.getSize())/2);
 
     }
     protected void printClick(Graphics2D g) {
@@ -187,5 +206,18 @@ public class Button extends Component {
      */
     public boolean isNoneImage() {
         return noneImage;
+    }
+    /**
+     * @return textString
+     */
+    public String getTextString() {
+        return textString;
+    }
+    /**
+     * @param textString 要设置的 textString
+     */
+    public void setTextString(String textString) {
+        this.textString = textString;
+        length=length(textString);
     }
 }

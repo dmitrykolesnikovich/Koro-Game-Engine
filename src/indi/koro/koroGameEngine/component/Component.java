@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -295,9 +296,13 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	float rotate=(float)this.rotate;
 	
 	g.rotate(rotate, x, y);
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_OFF);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,alpha));
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	printComponent(g);
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_OFF);
 	g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,1f));
+	g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	printChildren(g);
 	g.rotate(-rotate, x, y);
 	}
@@ -613,7 +618,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	    mouseListener.mouseReleased(x, y, e);
 	for (int i=components.size();i>0;i--) {
 	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		if(component.getX()<=x&component.getY()<=y&(component.getWidth()+component.getX())>=x&(component.getHeight()+component.getY())>=y) {
 		    component.mouseReleased(x-component.getX(), y-component.getY(), e);
 		    break;
 		}
@@ -633,7 +638,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	    mouseListener.mousePressed(x, y, e);
 	for (int i=components.size();i>0;i--) {
 	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		if(component.getX()<=x&component.getY()<=y&(component.getWidth()+component.getX())>=x&(component.getHeight()+component.getY())>=y) {
 		    component.mousePressed(x-component.getX(), y-component.getY(), e);
 		    break;
 		}
@@ -684,7 +689,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	    mouseListener.mouseClicked(x, y, e);
 	for (int i=components.size();i>0;i--) {
 	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		if(component.getX()<=x&component.getY()<=y&(component.getWidth()+component.getX())>=x&(component.getHeight()+component.getY())>=y) {
 		    component.mouseClicked(x-component.getX(), y-component.getY(), e);
 		    break;
 		}
@@ -706,7 +711,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	boolean firstComponent=false;
 	for (int i=components.size();i>0;i--) {
 	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		if(component.getX()<=x&component.getY()<=y&(component.getWidth()+component.getX())>=x&(component.getHeight()+component.getY())>=y) {
 		   if(!firstComponent) {
 		    if (!component.isMouseIn()) {
 			component.setMouseIn(true);
@@ -726,7 +731,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	}
 	for (int i=components.size();i>0;i--) {
 	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		if(component.getX()<=x&component.getY()<=y&(component.getWidth()+component.getX())>=x&(component.getHeight()+component.getY())>=y) {
 		    component.mouseMoved(x-component.getX(), y-component.getY(), e);
 		    break;
 		}
@@ -746,7 +751,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	    mouseListener.mouseDragged(x, y, e);
 	for (int i=components.size();i>0;i--) {
 	    indi.koro.koroGameEngine.component.Component component=components.get(i-1);
-		if(component.getAbsX()<=x&component.getAbsY()<=y&(component.getWidth()+component.getAbsX())>=x&(component.getHeight()+component.getAbsY())>=y) {
+		if(component.getX()<=x&component.getY()<=y&(component.getWidth()+component.getX())>=x&(component.getHeight()+component.getY())>=y) {
 		    component.mouseDragged(x-component.getX(), y-component.getY(), e);
 		    break;
 		}

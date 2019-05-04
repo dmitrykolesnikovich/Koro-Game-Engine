@@ -8,8 +8,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import indi.koro.koroGameEngine.component.scene.CustomSceneMode;
+import indi.koro.koroGameEngine.listener.SceneListener;
 
 /**
  * @author 16415
@@ -40,6 +42,7 @@ public class Scene extends Component{
     private boolean draw=false;
     private Color backgroundColor=Color.WHITE;
     private boolean disVisible=false;
+    protected ArrayList<SceneListener> sceneListeners=new ArrayList<>();
     /**
      * @return backgroundColor
      */
@@ -145,10 +148,16 @@ public class Scene extends Component{
     
     public void drawinto() {
 	draw=false;
+	for (SceneListener sceneListener : sceneListeners) {
+	    sceneListener.drawInto();
+	}
 	drawEffects(intoMode);
     }
     public void drawexit() {
 	draw=false;
+	for (SceneListener sceneListener : sceneListeners) {
+	    sceneListener.drawExit();
+	}
 	drawEffects(exitMode);
 	disVisible=true;
     }
@@ -248,7 +257,7 @@ public class Scene extends Component{
 	    while ( frame < allFrame) {
 		frame++;
 		if (exit) {
-			return ;
+			break ;
 		    }
 		try {
 		    Thread.sleep(16);
@@ -261,6 +270,9 @@ public class Scene extends Component{
 	    if (disVisible) {
 		setVisible(false);
 	    }
+	    for (SceneListener sceneListener : sceneListeners) {
+		    sceneListener.drawStop();
+		}
 	}
     }
     /**
@@ -275,5 +287,21 @@ public class Scene extends Component{
      */
     public void setBackgroundImage(BufferedImage backgroundImage) {
         this.backgroundImage = backgroundImage;
+    }
+
+    /**
+     * @return sceneListeners
+     */
+    public ArrayList<SceneListener> getSceneListeners() {
+        return sceneListeners;
+    }
+
+    /**
+     * @param sceneListeners 要设置的 sceneListeners
+     */
+    public void addSceneListeners(SceneListener...listeners) {
+        for (SceneListener sceneListener : listeners) {
+	    this.sceneListeners.add(sceneListener);
+	}
     }
 }

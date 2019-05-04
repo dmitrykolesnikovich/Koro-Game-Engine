@@ -14,6 +14,7 @@ package indi.koro.koroGameEngine.listener;
  * @version 1.0
  */
 public interface SceneListener {
-    public void drawIn();
+    public void drawInto();
     public void drawExit();
+    public void drawStop();
 }

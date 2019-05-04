@@ -312,14 +312,14 @@ public class MainFrame extends JPanel {
 			    // 如果本次绘制时间超过每帧需要绘制的时间，则直接继续绘制
 			    continue;
 			}
-			//Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
+			Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
 		    } catch (Exception e) {
 			e.printStackTrace();
 		    }
-		    //while ((System.nanoTime() - now) < fpsTime) {
+		    while ((System.nanoTime() - now) < fpsTime) {
 			// 使用循环，精确控制每帧绘制时长
-		//	System.nanoTime();
-		    //}
+			System.nanoTime();
+		    }
 
 		
 		
@@ -371,13 +371,13 @@ public class MainFrame extends JPanel {
 	Graphics2D g2d = (Graphics2D) g;
 	RenderingHints rh=new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	g2d.setRenderingHints(rh);
-        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	g2d.scale(Data.zoom,Data.zoom);
         g2d.setColor(Color.white);
 	mainGraphics.render((Graphics2D)g);
 	g2d.setFont(font);
-	//g2d.drawImage(mainGraphics.backImage(), -1, -1, w+1, h+1, null);
 	g2d.setColor(Color.black);
+	g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,(RenderingHints.VALUE_TEXT_ANTIALIAS_OFF));
+	g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,(RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB));
 	g2d.drawString("内部版本", 0, 40);
 	if (showfps) {
 	    g2d.drawString("FPS:" + fps, 0, 80);

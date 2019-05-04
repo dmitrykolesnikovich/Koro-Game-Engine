@@ -4,6 +4,8 @@
  *创建时间：2019年4月10日 下午8:59:15
  */
 package indi.koro.koroGameEngine.animation;
+import java.util.ArrayList;
+
 import indi.koro.koroGameEngine.component.*;
 import indi.koro.koroGameEngine.listener.ComponentEvent;
 
@@ -33,9 +35,30 @@ public class Move extends Animation {
     }
     protected void go() {
 	for (Component component : components) {
-	    component.setLocation((int)(((float)endX-(float)componentEvents.get(components.indexOf(component)).getX())*easeBoth((float)frame/(float)allFrame)+(float)componentEvents.get(components.indexOf(component)).getAbsX()), (int)(((float)endY-(float)componentEvents.get(components.indexOf(component)).getY())*easeBoth((float)frame/(float)allFrame)+(float)componentEvents.get(components.indexOf(component)).getAbsX()));
+	    component.setBounds((int)(((float)endX-(float)componentEvents.get(components.indexOf(component)).getX())*easeBoth((float)frame/(float)allFrame)+(float)componentEvents.get(components.indexOf(component)).getAbsX()), (int)(((float)endY-(float)componentEvents.get(components.indexOf(component)).getY())*easeBoth((float)frame/(float)allFrame)+(float)componentEvents.get(components.indexOf(component)).getAbsY()),componentEvents.get(components.indexOf(component)).getWidth(),componentEvents.get(components.indexOf(component)).getHeight());
 	}
     } 
+    /* （非 Javadoc）
+     * @see indi.koro.koroGameEngine.animation.Animation#start()
+     */
+    /* （非 Javadoc）
+     * @see indi.koro.koroGameEngine.animation.Animation#add(indi.koro.koroGameEngine.component.Component[])
+     */
+    @Override
+    public void add(Component... components) {
+        // TODO 自动生成的方法存根
+	for (Component component : components) {
+	    this.components.add(component);
+	}
+    }
+    @Override
+    public void start() {
+        // TODO 自动生成的方法存根
+	for (Component component : components) {
+	    componentEvents.add(component.getComponentEvent());
+	}
+        super.start();
+    }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.animation.Animation#stop()
      */

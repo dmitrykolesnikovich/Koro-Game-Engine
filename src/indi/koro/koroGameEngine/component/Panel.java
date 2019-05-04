@@ -6,6 +6,7 @@
 package indi.koro.koroGameEngine.component;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
  *项目名称：KoroGameEngine
@@ -19,14 +20,34 @@ public class Panel extends Component {
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#printComponent(java.awt.Graphics2D)
      */
+    BufferedImage background =null;
+    
     @Override
     protected void printComponent(Graphics2D g) {
         // TODO 自动生成的方法存根
         //super.printComponent(g);
 	g.setColor(getBackgroundColor());
-	if(opaque) {
-        g.fillRect(absX, absY, width, height);
+	if (background!=null) {
+	    g.drawImage(background, null, absX, absY);
+	}else {
+	    if(opaque) {
+	        g.fillRect(absX, absY, width, height);
+		}
 	}
 	
+    }
+
+    /**
+     * @return background
+     */
+    public BufferedImage getBackground() {
+        return background;
+    }
+
+    /**
+     * @param background 要设置的 background
+     */
+    public void setBackground(BufferedImage background) {
+        this.background = background;
     }
 }

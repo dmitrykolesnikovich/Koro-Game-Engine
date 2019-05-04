@@ -71,6 +71,24 @@ public class MusicPlayer {
 	});
 	mainThread.start();
     }
+    
+    public void close() {
+	new Thread(new Runnable() {
+	    public void run() {
+		try {
+		stopMusic();
+		sourceDataLine.drain();
+		sourceDataLine.close();
+		audioStream.close();
+		} catch (IOException e) {
+		    // TODO 自动生成的 catch 块
+		    e.printStackTrace();
+		}
+
+	    }
+	}).start();
+	
+    }
 
 //停止
     public void stop() {

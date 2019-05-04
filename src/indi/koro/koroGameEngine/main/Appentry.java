@@ -13,7 +13,7 @@ import indi.koro.koroGameEngine.system.MainSystem;
 
 public class Appentry {
 
-    public void star(String name, int mode) {
+    public void star(String name,String filename,String mainurl, int mode) {
 	// TODO 自动生成的方法存根
 	if (mode == 1) {
 		Thread thread=new Thread(new Runnable() {
@@ -35,13 +35,13 @@ public class Appentry {
 	MainSystem mainSystem = new MainSystem();
 	mainFrame.setname(name);
 	mainFrame.showfps(true);
-	mainSystem.star();
+	mainSystem.star(filename,mainurl);
 	mainFrame.show();
     }
 
     public static void main(String arg0[]) {
 	Appentry appentry = new Appentry();
-	appentry.star("Spice And Wolf-The Journey With Horo", 0);
+	appentry.star("Spice And Wolf-The Journey With Horo","SPICE AND WOLF-The journey with Horo.jar","main.Main", 0);
     }
 
 }
