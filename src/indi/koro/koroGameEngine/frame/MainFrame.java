@@ -7,7 +7,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
@@ -42,6 +45,7 @@ public class MainFrame extends JPanel {
     int h = 1080;
     boolean showfps = false;
     boolean highdraw=false;
+    boolean fullScene=false;
     Font font = new Font("宋体", Font.BOLD, 40);
     Thread mainrender = null;
     boolean gamestar = false;
@@ -52,7 +56,32 @@ public class MainFrame extends JPanel {
     private static Timer timer = new Timer(true);
     private ArrayList<Print> prints=new ArrayList<>();
     long fpsTime=0;
+    ArrayList<KeyListener> keyListeners=new ArrayList<>();
     
+    /* （非 Javadoc）
+     * @see java.awt.Component#addKeyListener(java.awt.event.KeyListener)
+     */
+    @Override
+    public synchronized void addKeyListener(KeyListener l) {
+        // TODO 自动生成的方法存根
+        keyListeners.add(l);
+    }
+    /* （非 Javadoc）
+     * @see java.awt.Component#removeKeyListener(java.awt.event.KeyListener)
+     */
+    @Override
+    public synchronized void removeKeyListener(KeyListener l) {
+        // TODO 自动生成的方法存根
+        keyListeners.remove(l);
+    }
+    /* （非 Javadoc）
+     * @see java.awt.Component#getKeyListeners()
+     */
+    @Override
+    public synchronized KeyListener[] getKeyListeners() {
+        // TODO 自动生成的方法存根
+        return (KeyListener[]) keyListeners.toArray();
+    }
     /* （非 Javadoc）
      * @see javax.swing.JComponent#update(java.awt.Graphics)
      */
@@ -394,6 +423,32 @@ public class MainFrame extends JPanel {
     public void showfps(boolean show) {
 	this.showfps = show;
     }
+    
+    public void setFullScene(boolean fullScene) {
+        /** 
+         * true无边框 全屏显示 
+         * false有边框 全屏显示 
+         */ 
+	/*
+	frame.setVisible(false);
+        frame.setUndecorated(fullScene); 
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize(); 
+        frame.setSize(d.width, d.height); 
+        frame.setVisible(true); 
+        this.fullScene=fullScene;
+        */
+	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
+        //通过调用GraphicsEnvironment的getDefaultScreenDevice方法获得当前的屏幕设备了 
+        GraphicsDevice gd = ge.getDefaultScreenDevice(); 
+        // 全屏设置 
+        if (fullScene) {
+        gd.setFullScreenWindow(frame);
+        }else {
+            gd.setFullScreenWindow(null);
+	}
+        frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+        this.fullScene=fullScene;
+    }
 
     public MainFrame(int fw, int fh) {// 设置窗口
 	w = fw;
@@ -404,6 +459,8 @@ public class MainFrame extends JPanel {
 	frame.setLayout(null);
 	frame.setBounds(0, 0, w, h);
 	frame.setTitle(Data.title);
+	frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+	frame.setMinimumSize(new Dimension(1080, 607));
 	this.setLayout(null);
 	this.setBounds(0, 0, w, h);
 	this.setBackground(Color.white);
@@ -450,11 +507,41 @@ public class MainFrame extends JPanel {
 		
 	    }
 	});
-	for (indi.koro.koroGameEngine.component.Component component : components) {
-	    this.addKeyListener(component);
-	    this.addComponentListener(component);
-	    this.addMouseWheelListener(component);
-	}
+	frame.addKeyListener(new KeyListener() {
+	    
+	    @Override
+	    public void keyTyped(KeyEvent e) {
+		// TODO 自动生成的方法存根
+		for (indi.koro.koroGameEngine.component.Component component:components) {
+		    component.keyTyped(e);
+		}
+		for (KeyListener keyListener : keyListeners) {
+		    keyListener.keyTyped(e);
+		}
+	    }
+	    
+	    @Override
+	    public void keyReleased(KeyEvent e) {
+		// TODO 自动生成的方法存根
+		for (indi.koro.koroGameEngine.component.Component component:components) {
+		    component.keyReleased(e);
+		}
+		for (KeyListener keyListener : keyListeners) {
+		    keyListener.keyReleased(e);
+		}
+	    }
+	    
+	    @Override
+	    public void keyPressed(KeyEvent e) {
+		// TODO 自动生成的方法存根
+		for (indi.koro.koroGameEngine.component.Component component:components) {
+		    component.keyPressed(e);
+		}
+		for (KeyListener keyListener : keyListeners) {
+		    keyListener.keyPressed(e);
+		}
+	    }
+	});
 	// ------------------------------------------------------------------------------------------------------
 	this.addMouseListener(new MouseListener() {// 自动缩放鼠标事件
 
@@ -592,6 +679,13 @@ public class MainFrame extends JPanel {
 	    }
 	});
 
+    }
+
+    /**
+     * @return fullScene
+     */
+    public boolean isFullScene() {
+        return fullScene;
     }
 
 

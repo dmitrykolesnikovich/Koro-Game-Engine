@@ -46,7 +46,7 @@ public class Animation {
     }
     public Animation() {
 	// TODO 自动生成的构造函数存根
-	thread=new Thread(new ARunnable());
+	
     }
     protected void run() {
 	while (frame<allFrame) {
@@ -98,6 +98,7 @@ public class Animation {
 	}
     }
     public void start() {
+	thread=new Thread(new ARunnable());
 	allFrame=(int)((float)(time)/16.666666667f);
 	thread.start();
 	for (AnimationListener animationListener : animationListeners) {

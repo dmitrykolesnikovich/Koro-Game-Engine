@@ -71,10 +71,6 @@ public class Move extends Animation {
         	ComponentEvent componentEvent=componentEvents.get(components.indexOf(component));
     	    	component.setLocation(componentEvent.getX(),componentEvent.getY());
     	}
-	}else {
-	    for (Component component : components) {
-		    component.setLocation(endX,endY);
-		}
 	}
         
         
