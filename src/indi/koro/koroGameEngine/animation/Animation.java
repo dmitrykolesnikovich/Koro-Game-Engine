@@ -98,8 +98,12 @@ public class Animation {
 	}
     }
     public void start() {
+	if (thread!=null) {
+	    thread.stop();
+	}
 	thread=new Thread(new ARunnable());
 	allFrame=(int)((float)(time)/16.666666667f);
+	frame=0;
 	thread.start();
 	for (AnimationListener animationListener : animationListeners) {
 	    animationListener.start();

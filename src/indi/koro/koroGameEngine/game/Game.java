@@ -8,10 +8,11 @@ import indi.koro.koroGameEngine.frame.MainGraphics;
 
 public abstract class Game {
     public abstract void run(MainGraphics mainGraphics, MainFrame mainFrame);
-
-
+    
     public abstract String backname();
-
+    
+    public abstract void load();
+    
     public abstract void render(Graphics2D g);
     
     public abstract BufferedImage backIcon() ;

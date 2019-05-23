@@ -138,6 +138,7 @@ public class MainSystem {
 	    Data.gameshow = true;
 	    Data.title=Data.nowGame.backname();
 	    Data.mainPanel.setIcon(Data.nowGame.backIcon());
+	    Data.nowGame.load();
 	    Data.nowGame.run(Data.mainGraphics, Data.mainPanel);
 	}
     }
