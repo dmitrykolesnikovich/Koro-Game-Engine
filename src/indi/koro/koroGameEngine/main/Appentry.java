@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import javax.swing.UIManager;
 
-import indi.koro.koroGameEngine.component.Print;
 import indi.koro.koroGameEngine.data.Data;
 import indi.koro.koroGameEngine.frame.MainFrame;
 import indi.koro.koroGameEngine.game.Game;

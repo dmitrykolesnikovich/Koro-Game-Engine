@@ -15,11 +15,10 @@ public class MusicPlayer {
     private String musicPath;
     private volatile boolean run = true;
     private Thread mainThread;
-
     private AudioInputStream audioStream;
     private AudioFormat audioFormat;
     private SourceDataLine sourceDataLine;
-
+    private int thread=0;
     public MusicPlayer() {
     }
 
@@ -56,14 +55,16 @@ public class MusicPlayer {
 	prefetch();
     }
 
-    public void start(boolean loop) throws Exception {
-	if (musicPath == null) {// 寻找文件
-	    throw new Exception("找不到文件");
-	}
+    public void start(boolean loop)  {
 	mainThread = new Thread(new Runnable() {
 	    public void run() {
 		try {
+		    if (thread<=2) {
+			thread++;
+		    
 		    playMusic(loop);
+		    thread--;
+		    }
 		} catch (InterruptedException e) {
 		    System.err.println(e);
 		}
@@ -95,7 +96,7 @@ public class MusicPlayer {
 	new Thread(new Runnable() {
 	    public void run() {
 		stopMusic();
-
+		thread=0;
 	    }
 	}).start();
     }
@@ -127,32 +128,26 @@ public class MusicPlayer {
     }
 
     private void playMusic(boolean loop) throws InterruptedException {
-	try {
 	    if (loop) {
 		while (true) {
 		    playMusic();
 		}
 	    } else {
 		playMusic();
-		sourceDataLine.drain();
-		sourceDataLine.close();
-		audioStream.close();
 	    }
 
-	} catch (IOException ex) {
-	    System.err.println(ex);
-	}
 
     }
 
     private void playMusic() {
+	    
 	try {
 	    synchronized (this) {
 		run = true;
-	    }
+	    
 	    audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
 	    int count;
-	    byte tempBuff[] = new byte[1024];
+	    byte tempBuff[] = new byte[10240];
 
 	    while ((count = audioStream.read(tempBuff, 0, tempBuff.length)) != -1) {
 		synchronized (this) {
@@ -160,9 +155,10 @@ public class MusicPlayer {
 			wait();
 		}
 		sourceDataLine.write(tempBuff, 0, count);
-
+		
 	    }
-
+	   
+	    }
 	} catch (UnsupportedAudioFileException ex) {
 	    System.err.println(ex);
 	} catch (IOException ex) {
@@ -170,7 +166,7 @@ public class MusicPlayer {
 	} catch (InterruptedException ex) {
 	    System.err.println(ex);
 	}
-
+	
     }
 
     private void stopMusic() {

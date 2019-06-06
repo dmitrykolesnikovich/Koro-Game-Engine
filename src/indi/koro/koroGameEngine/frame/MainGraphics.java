@@ -14,11 +14,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 
-import indi.koro.koroGameEngine.component.Print;
 import indi.koro.koroGameEngine.data.Data;
 
 public class MainGraphics {
-    ArrayList<Print> prints = new ArrayList<>();
     private MainFrame frame=null;
 
     public MainGraphics(MainFrame frame) {
@@ -39,9 +37,6 @@ public class MainGraphics {
     		if (Data.gameshow) {
     		    Data.nowGame.render(g);
     		}
-    		for (Print print : prints) {
-    		    print.printthis(g);
-    		}
 	
     		for (indi.koro.koroGameEngine.component.Component component : frame.getKoroComponents()) {
     		    if (component.isVisible()) {
@@ -54,10 +49,6 @@ public class MainGraphics {
 	//nowImageGraphics2d.drawImage(bufImg, 0, 0, 1920, 1080, null);
     }
 
-    public void remove(Print print) {
-	prints.remove(print);
-    }
-
     
 
     public static BufferedImage createCompatibleImage(int w, int h, int type) { // 创建image实例
@@ -67,15 +58,6 @@ public class MainGraphics {
 	return gc.createCompatibleImage(w, h, type);
     }
 
-    public void add(Print print) {// 添加print类
-	prints.add(print);
-    }
 
 
-    /**
-     * @return prints
-     */
-    public ArrayList<Print> getPrints() {
-        return prints;
-    }
 }

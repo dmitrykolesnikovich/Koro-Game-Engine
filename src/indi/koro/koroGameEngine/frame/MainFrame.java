@@ -27,7 +27,6 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import indi.koro.koroGameEngine.component.Print;
 import indi.koro.koroGameEngine.data.Data;
 
 public class MainFrame extends JPanel {
@@ -54,7 +53,6 @@ public class MainFrame extends JPanel {
     MainGraphics mainGraphics = null;
     private ArrayList<indi.koro.koroGameEngine.listener.MouseListener> mouseListeners = new ArrayList<indi.koro.koroGameEngine.listener.MouseListener>();
     private static Timer timer = new Timer(true);
-    private ArrayList<Print> prints=new ArrayList<>();
     long fpsTime=0;
     ArrayList<KeyListener> keyListeners=new ArrayList<>();
     
@@ -92,19 +90,6 @@ public class MainFrame extends JPanel {
 	paint(g);
     }
     
-    public void add(Print...prints) {
-	for (Print print : prints) {
-	    this.prints.add(print);
-	}
-    }
-    public void remove(Print...prints) {
-	for (Print print : prints) {
-	    this.prints.remove(print);
-	}
-    }
-    public void removeAllPrint() {
-	prints.removeAll(prints);
-    }
     /**
      *变量类型：ArrayList<indi.koro.koroGameEngine.component.Component>
       *创建时间：2019年4月5日 下午7:21:27
@@ -400,6 +385,7 @@ public class MainFrame extends JPanel {
 	Graphics2D g2d = (Graphics2D) g;
 	RenderingHints rh=new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	g2d.setRenderingHints(rh);
+	//g2d.setClip(0, 0, w, h);
 	g2d.scale(Data.zoom,Data.zoom);
         g2d.setColor(Color.white);
 	mainGraphics.render((Graphics2D)g);
@@ -407,6 +393,7 @@ public class MainFrame extends JPanel {
 	g2d.setColor(Color.black);
 	g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,(RenderingHints.VALUE_TEXT_ANTIALIAS_OFF));
 	g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,(RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB));
+	
 	g2d.drawString("内部版本", 0, 40);
 	if (showfps) {
 	    g2d.drawString("FPS:" + fps, 0, 80);

@@ -58,7 +58,7 @@ public class MainSystem {
 	    //默认去系统已经定义的路径查找对象，针对外部jar包不能用  
 	    //Class<?> c = Thread.currentThread().getContextClassLoader().loadClass(name.replace("/", ".").substring(0,name.length() - 6));  
 	    Class<?> c = loader.loadClass(name.replace("/", ".").substring(0,name.length() - 6));//自己定义的loader路径可以找到  
-	    System.out.println(c);  
+	    System.out.println("加载文件："+c);  
 	    classes.add(c);  
 	    Annotation[] classAnnos = c.getDeclaredAnnotations();  
 	    classAnnotationMap.put(c, classAnnos);  
@@ -71,13 +71,13 @@ public class MainSystem {
 	    classMethodAnnoMap.put(c, methodAnnoMap);  
 	   }  
 	  }  
-	  System.out.println(classes.size());  
+	  System.out.println("加载类总数："+classes.size());  
 	  
 	  
 	  Class<?> clazz = Class.forName(mainurl,true,loader);
 		Object ojb = clazz.newInstance();
 		Game game = (Game) ojb;
-		System.out.println("已加载：" + game.backname());
+		System.out.println("已加载游戏：" + game.backname());
 		Data.game.put(game.backname(), game);
 	 } catch (IOException e) {  
 	  e.printStackTrace();  

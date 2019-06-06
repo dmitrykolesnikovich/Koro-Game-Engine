@@ -75,7 +75,7 @@ public class Animation {
         this.repeat = repeat;
     }
     public void stop() {
-	thread.stop();
+	if(thread!=null)if(thread.isAlive())thread.stop();
 	for (AnimationListener animationListener : animationListeners) {
 	    animationListener.exit();
 	}

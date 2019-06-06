@@ -50,7 +50,6 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     protected int absX = 0;
     protected int absY = 0;
     protected float alpha=1f;
-    protected ArrayList<Print> prints=new ArrayList<>();
     protected boolean visible=true;
     protected Color backgroundColor=Color.white;
     protected boolean opaque=true;
@@ -80,19 +79,6 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	}
     }
     
-    public void add(Print...prints) {
-	for (Print print : prints) {
-	    this.prints.add(print);
-	}
-    }
-    public void remove(Print...prints) {
-	for (Print print : prints) {
-	    this.prints.remove(print);
-	}
-    }
-    public void removeAllPrint() {
-	prints.removeAll(prints);
-    }
     
     public indi.koro.koroGameEngine.listener.ComponentEvent getComponentEvent(){
 	return new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this);
@@ -229,24 +215,23 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     }
     
     public void setBounds(int x, int y, int width,int height) {
-	this.width=width;
-	this.height=height;
-	absX=absX+(x-this.x);
-	this.x=x;
-	absY=absY+(y-this.y);
-	this.y=y;
-	for (Component component : components) {
-	    component.setabsLocation(absX, absY);
-	}
-	indi.koro.koroGameEngine.listener.ComponentEvent event=new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this);
-	move(event);
-	reSize(event);
-	for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
-	    listener.move(event);
-	    listener.reSize(event);
-	}
+        this.width=width;
+        this.height=height;
+        absX=absX+(x-this.x);
+        this.x=x;
+        absY=absY+(y-this.y);
+        this.y=y;
+        for (Component component : components) {
+            component.setabsLocation(absX, absY);
+        }
+        indi.koro.koroGameEngine.listener.ComponentEvent event=new indi.koro.koroGameEngine.listener.ComponentEvent(x, y, absX, absY, width, height,(int)rotate, this);
+        move(event);
+        reSize(event);
+        for(indi.koro.koroGameEngine.listener.ComponentListener listener: koroComponentListeners) {
+            listener.move(event);
+            listener.reSize(event);
+        }
     }
-    
     /**
      * 
      * <p>方法名：printChildren</p>
@@ -275,9 +260,6 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
      *@param g
      */
     protected void printComponent(Graphics2D g) {
-	for (Print print : prints) {
-	    print.print(g);
-	}
     }
 
     /**
@@ -367,11 +349,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
      *@author 16415
      *@return void
      *@param comp
-     */
-    public void add(Component comp) {
-	components.add(comp);
-	comp.setabsLocation(absX, absY);
-    }
+     */ 
     
     public void add(Component...components) {
 	for (Component component : components) {

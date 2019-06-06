@@ -25,6 +25,17 @@ public class Move extends Animation {
 	endY=y;
     }
     /* （非 Javadoc）
+     * @see indi.koro.koroGameEngine.animation.Animation#run()
+     */
+    @Override
+    protected void run() {
+        // TODO 自动生成的方法存根
+        super.run();
+        for (Component component : components) {
+	    component.setBounds(endX, endY, componentEvents.get(components.indexOf(component)).getWidth(),componentEvents.get(components.indexOf(component)).getHeight());
+	}
+    }
+    /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.animation.Animation#render()
      */
     @Override
@@ -43,6 +54,7 @@ public class Move extends Animation {
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.animation.Animation#add(indi.koro.koroGameEngine.component.Component[])
      */
+    
     @Override
     public void add(Component... components) {
         // TODO 自动生成的方法存根
