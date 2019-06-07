@@ -8,6 +8,9 @@ package indi.koro.koroGameEngine.component;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+
+import indi.koro.koroGameEngine.music.MusicPlayer;
 
 /**
  *项目名称：KoroGameEngine
@@ -26,9 +29,13 @@ public class Button extends Component {
     protected BufferedImage buttonImage=null;
     protected BufferedImage clickImage=null;
     protected BufferedImage enteredImage=null;
+    protected MusicPlayer enteredPlayer=null,clickPlayer=null;;
     final static public int MOUSEENTERED=1;
     final static public int MOUSECLICKED=2;
     final static public int MOUSENONE=0;
+    public void setMusic(File clickFile,File enteredFile) {
+	
+    }
     /**
      * 
      */
