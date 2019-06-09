@@ -159,7 +159,6 @@ public class Scene extends Component{
 	    sceneListener.drawExit();
 	}
 	drawEffects(exitMode);
-	disVisible=true;
     }
     
     private void drawEffects(int mode) {
@@ -267,9 +266,6 @@ public class Scene extends Component{
 		}
 	    }
 	    draw=false;
-	    if (disVisible) {
-		setVisible(false);
-	    }
 	    for (SceneListener sceneListener : sceneListeners) {
 		    sceneListener.drawStop();
 		}

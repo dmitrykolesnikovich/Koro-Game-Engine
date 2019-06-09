@@ -29,12 +29,13 @@ public class Button extends Component {
     protected BufferedImage buttonImage=null;
     protected BufferedImage clickImage=null;
     protected BufferedImage enteredImage=null;
-    protected MusicPlayer enteredPlayer=null,clickPlayer=null;;
+    protected MusicPlayer enteredPlayer=null,clickPlayer=null;
     final static public int MOUSEENTERED=1;
     final static public int MOUSECLICKED=2;
     final static public int MOUSENONE=0;
-    public void setMusic(File clickFile,File enteredFile) {
-	
+    public void setMusic(String clickFile,String enteredFile) {
+	if(enteredFile!=null)enteredPlayer=new MusicPlayer(enteredFile);
+	if(clickFile!=null)clickPlayer=new MusicPlayer(clickFile);
     }
     /**
      * 
@@ -159,6 +160,7 @@ public class Button extends Component {
     public void mouseClicked(int x, int y, MouseEvent e) {
         // TODO 自动生成的方法存根
         super.mouseClicked(x, y, e);
+        if(clickPlayer!=null)clickPlayer.start(false);
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#mousePressed(int, int, java.awt.event.MouseEvent)
@@ -178,6 +180,7 @@ public class Button extends Component {
         super.mouseEntered(x, y, e);
         mode=MOUSEENTERED;
         mouseEntered=true;
+        if(enteredPlayer!=null)enteredPlayer.start(false);
     }
     /* （非 Javadoc）
      * @see indi.koro.koroGameEngine.component.Component#mouseExited(int, int, java.awt.event.MouseEvent)

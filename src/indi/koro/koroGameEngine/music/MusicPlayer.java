@@ -19,6 +19,7 @@ public class MusicPlayer {
     private AudioFormat audioFormat;
     private SourceDataLine sourceDataLine;
     private int thread=0;
+    private boolean stop=false;
     public MusicPlayer() {
     }
 
@@ -129,9 +130,10 @@ public class MusicPlayer {
 
     private void playMusic(boolean loop) throws InterruptedException {
 	    if (loop) {
-		while (true) {
+		while (!stop) {
 		    playMusic();
 		}
+		stop=false;
 	    } else {
 		playMusic();
 	    }
@@ -172,6 +174,7 @@ public class MusicPlayer {
     private void stopMusic() {
 	synchronized (this) {
 	    run = false;
+	    stop=true;
 	    notifyAll();
 	}
     }

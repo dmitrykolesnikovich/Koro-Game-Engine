@@ -52,7 +52,7 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
     protected float alpha=1f;
     protected boolean visible=true;
     protected Color backgroundColor=Color.white;
-    protected boolean opaque=true;
+    protected boolean opaque=false;
     protected float rotate=0;
     protected boolean mouseIn=false;
     protected Font font=new Font("宋体", Font.BOLD, 20);
@@ -67,7 +67,10 @@ public class Component implements MouseListener, MouseWheelListener, KeyListener
 	//this.rotate=rotate;
 	this.rotate= (float) (Math.PI * rotate / 180);
     }
-
+    public void setLast(Component component) {
+	components.remove(component);
+	components.add(component);
+    }
     /**
      * @param visible 要设置的 visible
      */

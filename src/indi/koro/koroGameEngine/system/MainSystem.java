@@ -41,8 +41,6 @@ public class MainSystem {
     }
 
     private void gameload(String filename,String mainurl) throws Exception {// 加载游戏
-	
-	
 	 Set<Class<?>> classes = new LinkedHashSet<Class<?>>();//所有的Class对象  
 	 Map<Class<?>, Annotation[]> classAnnotationMap = new HashMap<Class<?>, Annotation[]>();//每个Class对象上的注释对象  
 	 Map<Class<?>, Map<Method, Annotation[]>> classMethodAnnoMap = new HashMap<Class<?>, Map<Method,Annotation[]>>();//每个Class对象中每个方法上的注释对象  
